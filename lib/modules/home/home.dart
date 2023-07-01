@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_finder/models/recipe/recipe.dart';
 import 'package:recipe_finder/modules/recipe/recipe.dart';
-import 'package:recipe_finder/widgets/texts.dart';
 
-import '../../utils/logic.dart';
 import 'components/buttons.dart';
 import 'components/search.dart';
 
@@ -17,28 +15,21 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<String> ingredients = [];
-  List<Recipe>? recipes;
+  Recipe? recipe;
   String? helperText;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Recipe Generator"),
+      ),
+      backgroundColor: Colors.orange.shade50,
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(
-              height: 30,
-            ),
-            const Text(
-              "Trouve ta recette avec ce que tu as dans ton frigo !",
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const Divider(),
             SearchInput(
               onSearch: (text) {
                 setState(() {
@@ -65,15 +56,13 @@ class _HomePageState extends State<HomePage> {
                   .toList(),
             ),
             Expanded(
-              child: recipes != null || (recipes ?? []).isNotEmpty
-                  ? RecipeList(recipes: recipes ?? [])
-                  : Center(
-                      child: Text(
-                        helperText ?? "",
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
+              child: recipe == null
+                  ? Center(child: Text(helperText ?? ""))
+                  : SingleChildScrollView(
+                      child: RecipeCard(
+                        title: recipe!.title,
+                        ingredients: recipe!.ingredients,
+                        instructions: recipe!.directions,
                       ),
                     ),
             ),
@@ -89,11 +78,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _searchRecipe(value) {
-    helperText == null;
-    recipes = null;
-    if (value is List<Recipe>) {
+    helperText == "Nous concevons une belle recette...";
+    recipe = null;
+    if (value is Recipe) {
       setState(() {
-        recipes = value;
+        recipe = value;
       });
     }
     if (value is String) {
@@ -103,34 +92,9 @@ class _HomePageState extends State<HomePage> {
     }
     if (value == null) {
       setState(() {
-        helperText = "Voire les recettes trouvées !";
+        helperText =
+            "Le cuisinier est occupé, veuillez patientez et réessayer dans une minute !";
       });
     }
-  }
-}
-
-class RecipeList extends StatelessWidget {
-  const RecipeList({super.key, required this.recipes});
-
-  final List<Recipe> recipes;
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.separated(
-        itemBuilder: (context, index) {
-          return ListTile(
-            leading: const Icon(Icons.food_bank_outlined),
-            onTap: () {
-              Nav.push(context, RecipePage(recipe: recipes[index]));
-            },
-            title: TextTr(
-              recipes[index].title!,
-            ),
-          );
-        },
-        separatorBuilder: (context, index) {
-          return const Divider();
-        },
-        itemCount: recipes.length);
   }
 }

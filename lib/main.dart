@@ -12,7 +12,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Recipe Discover",
+      title: "Recipe Generator",
       debugShowCheckedModeBanner: false,
       home: const HomePage(),
       theme: ThemeData(

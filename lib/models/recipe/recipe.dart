@@ -1,36 +1,37 @@
 class Recipe {
-  String? title;
-  String? ingredients;
-  String? servings;
-  String? instructions;
+  String title;
+  String ingredients;
+  String directions;
 
   Recipe({
-    this.title,
-    this.ingredients,
-    this.servings,
-    this.instructions,
+    required this.title,
+    required this.ingredients,
+    required this.directions,
   });
 
-  Map<String, dynamic> toJson() => {
-        'title': title,
-        'ingredients': ingredients,
-        'servings': servings,
-        'instructions': instructions,
-      };
+  factory Recipe.from(String text) {
+    List<String> results = ["", "", ""];
 
-  factory Recipe.fromJson(Map<String, dynamic> json) {
+    List<String> words = text.split(" ");
+    int index = 0;
+    for (var word in words) {
+      if (word == "title:") {
+        index = 0;
+      } else if (word == "ingredients:") {
+        index = 1;
+      } else if (word == "directions:") {
+        index = 2;
+      }
+      if (["title:", "ingredients:", "directions:"].contains(word)) {
+        continue;
+      }
+      results[index] += "$word ";
+    }
+
     return Recipe(
-      title: json['title'],
-      ingredients: json['ingredients'],
-      servings: json['servings'],
-      instructions: json['instructions'],
+      title: results[0],
+      ingredients: results[1],
+      directions: results[2],
     );
-  }
-
-  bool containsIngredient(String word) {
-    return ingredients!.contains(word) ||
-        instructions!.contains(word) ||
-        servings!.contains(word) ||
-        title!.contains(word);
   }
 }

@@ -20,48 +20,28 @@ class RecipePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // _buildHeadText("Ingredients :"),
-              // IngredientsWidget(ingredients: recipe!.ingredients!),
-              // const SizedBox(
-              //   height: 15,
-              // ),
-              // _buildHeadText("Instructions :"),
-              // InstructionsWidget(instructions: recipe!.instructions!),
               RecipeCard(
-                  title: recipe!.title!,
-                  ingredients: recipe!.ingredients!,
-                  servings: recipe!.servings!,
-                  instructions: recipe!.instructions!),
+                title: recipe!.title,
+                ingredients: recipe!.ingredients,
+                instructions: recipe!.directions,
+              ),
             ],
           ),
         ),
       ),
     );
   }
-
-  // Text _buildHeadText(String text) {
-  //   return Text(
-  //     text,
-  //     style: TextStyle(
-  //       fontSize: 16,
-  //       fontWeight: FontWeight.bold,
-  //       color: Colors.orange.shade800,
-  //     ),
-  //   );
-  // }
 }
 
 class RecipeCard extends StatelessWidget {
   final String title;
   final String ingredients;
-  final String servings;
   final String instructions;
 
   const RecipeCard({
     super.key,
     required this.title,
     required this.ingredients,
-    required this.servings,
     required this.instructions,
   });
 
@@ -77,18 +57,6 @@ class RecipeCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                const Spacer(),
-                IconButton(
-                  
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: const Icon(Icons.close, color: Colors.red),
-                )
-              ],
-            ),
             TextTr(
               title,
               style: const TextStyle(
@@ -106,19 +74,6 @@ class RecipeCard extends StatelessWidget {
             ),
             const SizedBox(height: 8.0),
             IngredientsWidget(ingredients: ingredients),
-            const SizedBox(height: 16.0),
-            const TextTr(
-              'Servings:',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 8.0),
-            TextTr(
-              servings,
-              style: const TextStyle(fontSize: 16),
-            ),
             const SizedBox(height: 16.0),
             const TextTr(
               'Instructions:',

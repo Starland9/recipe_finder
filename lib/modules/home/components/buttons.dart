@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../../apis/services/ninja.dart';
+import 'package:recipe_finder/apis/services/hugging_face.dart';
 
 class FindButton extends StatelessWidget {
   const FindButton({
@@ -16,11 +15,13 @@ class FindButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FilledButton.icon(
       style: const ButtonStyle(
-        fixedSize: MaterialStatePropertyAll(Size(double.maxFinite, 50)),
+        fixedSize: MaterialStatePropertyAll(
+          Size(double.maxFinite, 50),
+        ),
       ),
       onPressed: () {
         onTap!("Nous cherchons ta recette...");
-        Ninja.getFullRecipes(ingredients)?.then((value) {
+        HuggingFace().getRecipe(ingredients)?.then((value) {
           onTap!(value);
         });
       },

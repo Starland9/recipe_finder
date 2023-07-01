@@ -17,14 +17,14 @@ class SearchInput extends StatelessWidget {
         contentPadding: const EdgeInsets.only(left: 10),
         border: OutlineInputBorder(
           gapPadding: 0,
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(12),
         ),
         hintText: "Ajoute ton ingredient ici",
         suffixIcon: IconButton.filled(
           style: const ButtonStyle(
             shape: MaterialStatePropertyAll(RoundedRectangleBorder(
                 borderRadius:
-                    BorderRadius.horizontal(right: Radius.circular(15)))),
+                    BorderRadius.horizontal(right: Radius.circular(12)))),
           ),
           onPressed: () {
             onSearch!(controller.text);
