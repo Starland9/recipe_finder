@@ -5,10 +5,12 @@ import 'package:recipe_finder/widgets/texts.dart';
 import '../../models/recipe/recipe.dart';
 
 class RecipePage extends StatelessWidget {
-  const RecipePage({super.key, required this.recipe, this.helperText});
+  const RecipePage({
+    super.key,
+    required this.recipe,
+  });
 
-  final Recipe? recipe;
-  final String? helperText;
+  final Recipe recipe;
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +23,7 @@ class RecipePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               RecipeCard(
-                title: recipe!.title,
-                ingredients: recipe!.ingredients,
-                instructions: recipe!.directions,
+                recipe: recipe,
               ),
             ],
           ),
@@ -34,15 +34,11 @@ class RecipePage extends StatelessWidget {
 }
 
 class RecipeCard extends StatelessWidget {
-  final String title;
-  final String ingredients;
-  final String instructions;
+  final Recipe recipe;
 
   const RecipeCard({
     super.key,
-    required this.title,
-    required this.ingredients,
-    required this.instructions,
+    required this.recipe,
   });
 
   @override
@@ -58,7 +54,7 @@ class RecipeCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextTr(
-              title,
+              recipe.title,
               style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -73,7 +69,7 @@ class RecipeCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8.0),
-            IngredientsWidget(ingredients: ingredients),
+            IngredientsWidget(ingredients: recipe.ingredients),
             const SizedBox(height: 16.0),
             const TextTr(
               'Instructions:',
@@ -83,7 +79,7 @@ class RecipeCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8.0),
-            InstructionsWidget(instructions: instructions),
+            InstructionsWidget(instructions: recipe.directions),
           ],
         ),
       ),

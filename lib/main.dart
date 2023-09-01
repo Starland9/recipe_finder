@@ -19,6 +19,13 @@ class MainApp extends StatelessWidget {
         useMaterial3: true,
         colorSchemeSeed: Colors.deepOrange,
         textTheme: GoogleFonts.latoTextTheme(),
+        appBarTheme: const AppBarTheme(
+          foregroundColor: Colors.deepOrange,
+          backgroundColor: Colors.white,
+          surfaceTintColor: Colors.white,
+          elevation: 10,
+        ),
+        scaffoldBackgroundColor: const Color.fromARGB(255, 255, 248, 238),
       ),
     );
   }
