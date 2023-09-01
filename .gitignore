@@ -10,6 +10,7 @@
 .svn/
 migrate_working_dir/
 /lib/apis/keys/
+lib/apis/keys/ninja.dart
 
 
 # IntelliJ related

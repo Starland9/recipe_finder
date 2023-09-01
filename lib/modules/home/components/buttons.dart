@@ -1,35 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_finder/apis/services/hugging_face.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:recipe_finder/blocs/recipe/bloc/recipe_bloc.dart';
 
 class FindButton extends StatelessWidget {
   const FindButton({
     super.key,
-    this.onTap,
-    required this.ingredients,
+    this.onPressed,
   });
 
-  final Function(dynamic value)? onTap;
-  final List<String> ingredients;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
-    return FilledButton.icon(
-      style: const ButtonStyle(
-        fixedSize: MaterialStatePropertyAll(
-          Size(double.maxFinite, 50),
-        ),
-      ),
-      onPressed: () {
-        onTap!("Nous cherchons ta recette...");
-        HuggingFace().getRecipe(ingredients)?.then((value) {
-          onTap!(value);
-        });
+    return BlocBuilder<RecipeBloc, RecipeState>(
+      builder: (context, state) {
+        if (state is RecipeLoading) {
+          return const Center(
+            child: SizedBox(
+              width: 50,
+              height: 50,
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+        return FilledButton.icon(
+          style: ButtonStyle(
+              fixedSize:
+                  const MaterialStatePropertyAll(Size(double.maxFinite, 50)),
+              shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)))),
+          onPressed: onPressed,
+          icon: const Icon(Icons.hdr_strong_sharp),
+          label: const Text(
+            "Trouver ma recette",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        );
       },
-      icon: const Icon(Icons.hdr_strong_sharp),
-      label: const Text(
-        "Trouver ma recette",
-        style: TextStyle(fontWeight: FontWeight.bold),
-      ),
     );
   }
 }

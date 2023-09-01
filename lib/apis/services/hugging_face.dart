@@ -21,22 +21,17 @@ class HuggingFace {
     return Uri.parse(modelsUrl + modelName);
   }
 
-  Future? getRecipe(List<String> ingredients) async {
-    try {
-      String translatedIngredients =
-          (await ingredients.join(",").translate()).text;
+  Future<Recipe> getRecipe(List<String> ingredients) async {
+    String translatedIngredients =
+        (await ingredients.join(",").translate()).text;
 
-      var r = await http.post(
-        _getModel("flax-community/t5-recipe-generation"),
-        headers: _getHds,
-        body: translatedIngredients,
-      );
+    var r = await http.post(
+      _getModel("flax-community/t5-recipe-generation"),
+      headers: _getHds,
+      body: translatedIngredients,
+    );
 
-      return Recipe.from(jsonDecode(r.body)[0]["generated_text"]);
-    } catch (e) {
-      print(e);
-      return "Une erreur est survenue \n$e";
-    }
+    return Recipe.from(jsonDecode(r.body)[0]["generated_text"]);
   }
 
   Map<String, String> get _getHds {

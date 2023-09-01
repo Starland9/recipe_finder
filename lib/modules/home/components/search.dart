@@ -27,7 +27,7 @@ class SearchInput extends StatelessWidget {
                     BorderRadius.horizontal(right: Radius.circular(12)))),
           ),
           onPressed: () {
-            onSearch!(controller.text);
+            onSearch?.call(controller.text);
             controller.clear();
           },
           icon: const Icon(
